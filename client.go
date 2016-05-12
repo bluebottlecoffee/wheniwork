@@ -10,13 +10,13 @@ import (
 
 const ISO8601 = "2006-01-02 15:04:05"
 
-type Doer interface {
+type doer interface {
 	Do(*http.Request) (*http.Response, error)
 }
 
 type Client struct {
 	Token      string
-	HttpClient Doer
+	HttpClient doer
 	BaseURL    string
 }
 
