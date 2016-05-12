@@ -1,6 +1,7 @@
 package wheniwork
 
 import (
+	"bytes"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
@@ -25,7 +26,19 @@ func Login(creds *Credentials) (*Client, error) {
 	}
 
 	httpClient := &http.Client{}
-	req, err := http.NewRequest("POST", creds.BaseURL+"/login", nil)
+
+	loginRequest := LoginRequest{
+		Username: creds.Username,
+		Password: creds.Password,
+	}
+
+	loginRequestBody, err := json.Marshal(loginRequest)
+
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", creds.BaseURL+"/login", bytes.NewReader(loginRequestBody))
 
 	if err != nil {
 		return nil, err

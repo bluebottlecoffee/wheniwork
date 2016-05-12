@@ -19,6 +19,13 @@ func TestLogin(t *testing.T) {
 			t.Error("W-Key header was improperly set to", r.Header.Get("W-Key"))
 		}
 
+		contents, err := ioutil.ReadAll(r.Body)
+		j := string(contents)
+
+		if j != `{"username":"gregg@bluebottlecoffee.com","password":"notthemagicword"}` {
+			t.Error("Request body was:", j)
+		}
+
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(bytes)
 	}))
