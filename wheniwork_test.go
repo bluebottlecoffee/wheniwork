@@ -35,7 +35,7 @@ func TestLogin(t *testing.T) {
 		Username: "gregg@bluebottlecoffee.com",
 		Password: "notthemagicword",
 		Key:      "iworksoharditsnotfunny",
-		BaseURL:  ts.URL,
+		baseURL:  ts.URL,
 	})
 
 	if client.Token != "ilovemyboss" {

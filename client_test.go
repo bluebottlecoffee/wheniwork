@@ -23,7 +23,7 @@ func TestListShifts(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	client := Client{Token: "faketoken", HttpClient: &http.Client{}, BaseURL: ts.URL}
+	client := Client{Token: "faketoken", HttpClient: &http.Client{}, baseURL: ts.URL}
 	resp, err := client.ListShifts(&ListShiftParams{})
 
 	if err != nil {
@@ -51,7 +51,7 @@ func (c *requestRecorder) Do(req *http.Request) (*http.Response, error) {
 
 func TestListShiftsWithStartEnd(t *testing.T) {
 	recorder := requestRecorder{}
-	client := Client{Token: "faketoken", HttpClient: &recorder, BaseURL: "wheniwork.com"}
+	client := Client{Token: "faketoken", HttpClient: &recorder, baseURL: "wheniwork.com"}
 	_, err := client.ListShifts(&ListShiftParams{
 		Start: time.Date(2014, 3, 5, 0, 0, 0, 0, time.UTC),
 		End:   time.Date(2014, 3, 8, 23, 59, 59, 0, time.UTC),
@@ -68,7 +68,7 @@ func TestListShiftsWithStartEnd(t *testing.T) {
 
 func TestListShiftsWithLocationId(t *testing.T) {
 	recorder := requestRecorder{}
-	client := Client{Token: "faketoken", HttpClient: &recorder, BaseURL: "wheniwork.com"}
+	client := Client{Token: "faketoken", HttpClient: &recorder, baseURL: "wheniwork.com"}
 	_, err := client.ListShifts(&ListShiftParams{
 		LocationId: []string{"1"},
 	})
@@ -84,7 +84,7 @@ func TestListShiftsWithLocationId(t *testing.T) {
 
 func TestListShiftsWithMultipleLocationId(t *testing.T) {
 	recorder := requestRecorder{}
-	client := Client{Token: "faketoken", HttpClient: &recorder, BaseURL: "wheniwork.com"}
+	client := Client{Token: "faketoken", HttpClient: &recorder, baseURL: "wheniwork.com"}
 	_, err := client.ListShifts(&ListShiftParams{
 		LocationId: []string{"1", "4"},
 	})

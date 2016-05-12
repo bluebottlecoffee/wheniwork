@@ -11,13 +11,13 @@ type Credentials struct {
 	Username string
 	Password string
 	Key      string
-	BaseURL  string
+	baseURL  string
 }
 
 // POST https://api.wheniwork.com/2/login
 func Login(creds *Credentials) (*Client, error) {
-	if creds.BaseURL == "" {
-		creds.BaseURL = "https://api.wheniwork.com/2"
+	if creds.baseURL == "" {
+		creds.baseURL = "https://api.wheniwork.com/2"
 	}
 
 	httpClient := &http.Client{}
@@ -33,7 +33,7 @@ func Login(creds *Credentials) (*Client, error) {
 		return nil, err
 	}
 
-	req, err := http.NewRequest("POST", creds.BaseURL+"/login", bytes.NewReader(loginRequestBody))
+	req, err := http.NewRequest("POST", creds.baseURL+"/login", bytes.NewReader(loginRequestBody))
 
 	if err != nil {
 		return nil, err

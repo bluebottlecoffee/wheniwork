@@ -17,11 +17,11 @@ type doer interface {
 type Client struct {
 	Token      string
 	HttpClient doer
-	BaseURL    string
+	baseURL    string
 }
 
 func (c *Client) url(path string) *url.URL {
-	u, err := url.Parse(c.BaseURL + path)
+	u, err := url.Parse(c.baseURL + path)
 
 	if err != nil {
 		panic(err)
