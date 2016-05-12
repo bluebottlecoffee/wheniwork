@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"testing"
 	"time"
 )
@@ -39,7 +40,7 @@ type requestRecorder struct {
 }
 
 func (c *requestRecorder) Do(req *http.Request) (*http.Response, error) {
-	c.RequestedPath = req.URL.String()
+	c.RequestedPath, _ = url.QueryUnescape(req.URL.String())
 
 	responseBody := `{}`
 	return &http.Response{
@@ -48,7 +49,7 @@ func (c *requestRecorder) Do(req *http.Request) (*http.Response, error) {
 	}, nil
 }
 
-func TestListShiftsWithQueryParams(t *testing.T) {
+func TestListShiftsWithStartEnd(t *testing.T) {
 	recorder := requestRecorder{}
 	client := Client{Token: "faketoken", HttpClient: &recorder, BaseURL: "wheniwork.com"}
 	_, err := client.ListShifts(&ListShiftParams{
@@ -60,7 +61,39 @@ func TestListShiftsWithQueryParams(t *testing.T) {
 		t.Error(err)
 	}
 
-	if recorder.RequestedPath != "wheniwork.com/shifts?end=2014-03-08+23%3A59%3A59&start=2014-03-05+00%3A00%3A00" {
+	if recorder.RequestedPath != "wheniwork.com/shifts?end=2014-03-08 23:59:59&start=2014-03-05 00:00:00" {
+		t.Error("Request was made to:", recorder.RequestedPath)
+	}
+}
+
+func TestListShiftsWithLocationId(t *testing.T) {
+	recorder := requestRecorder{}
+	client := Client{Token: "faketoken", HttpClient: &recorder, BaseURL: "wheniwork.com"}
+	_, err := client.ListShifts(&ListShiftParams{
+		LocationId: []string{"1"},
+	})
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	if recorder.RequestedPath != "wheniwork.com/shifts?location_id=1" {
+		t.Error("Request was made to:", recorder.RequestedPath)
+	}
+}
+
+func TestListShiftsWithMultipleLocationId(t *testing.T) {
+	recorder := requestRecorder{}
+	client := Client{Token: "faketoken", HttpClient: &recorder, BaseURL: "wheniwork.com"}
+	_, err := client.ListShifts(&ListShiftParams{
+		LocationId: []string{"1", "4"},
+	})
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	if recorder.RequestedPath != "wheniwork.com/shifts?location_id=1,4" {
 		t.Error("Request was made to:", recorder.RequestedPath)
 	}
 }

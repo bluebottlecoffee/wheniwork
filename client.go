@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 const ISO8601 = "2006-01-02 15:04:05"
@@ -32,8 +33,19 @@ func (c *Client) url(path string) *url.URL {
 func (c *Client) ListShifts(params *ListShiftParams) (*ListShiftsResponse, error) {
 	u := c.url("/shifts")
 	q := u.Query()
-	q.Set("start", params.Start.Format(ISO8601))
-	q.Set("end", params.End.Format(ISO8601))
+
+	if !params.Start.IsZero() {
+		q.Set("start", params.Start.Format(ISO8601))
+	}
+
+	if !params.End.IsZero() {
+		q.Set("end", params.End.Format(ISO8601))
+	}
+
+	if len(params.LocationId) > 0 {
+		q.Set("location_id", strings.Join(params.LocationId, ","))
+	}
+
 	u.RawQuery = q.Encode()
 
 	listShiftsResponse := ListShiftsResponse{}

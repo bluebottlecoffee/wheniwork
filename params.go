@@ -5,6 +5,7 @@ import (
 )
 
 type ListShiftParams struct {
-	Start time.Time
-	End   time.Time
+	Start      time.Time
+	End        time.Time
+	LocationId []string
 }
