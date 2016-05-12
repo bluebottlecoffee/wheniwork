@@ -15,6 +15,10 @@ func TestLogin(t *testing.T) {
 			t.Error(err)
 		}
 
+		if r.Header.Get("W-Key") != "iworksoharditsnotfunny" {
+			t.Error("W-Key header was improperly set to", r.Header.Get("W-Key"))
+		}
+
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(bytes)
 	}))
