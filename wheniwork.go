@@ -14,11 +14,6 @@ type Credentials struct {
 	BaseURL  string
 }
 
-type Client struct {
-	Token      string
-	HttpClient *http.Client
-}
-
 // POST https://api.wheniwork.com/2/login
 func Login(creds *Credentials) (*Client, error) {
 	if creds.BaseURL == "" {
