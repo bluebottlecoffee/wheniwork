@@ -54,5 +54,9 @@ func Login(creds *Credentials) (*Client, error) {
 	loginResponse := &LoginResponse{}
 	err = json.Unmarshal(contents, &loginResponse)
 
+	if err != nil {
+		return nil, err
+	}
+
 	return &Client{Token: loginResponse.Login.Token, HttpClient: httpClient}, nil
 }
