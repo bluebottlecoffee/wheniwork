@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-const ISO8601 = "2006-01-02 15:04:05"
+const iSO8601 = "2006-01-02 15:04:05"
 
 type doer interface {
 	Do(*http.Request) (*http.Response, error)
@@ -36,11 +36,11 @@ func (c *Client) ListShifts(params *ListShiftParams) (*ListShiftsResponse, error
 	q := u.Query()
 
 	if !params.Start.IsZero() {
-		q.Set("start", params.Start.Format(ISO8601))
+		q.Set("start", params.Start.Format(iSO8601))
 	}
 
 	if !params.End.IsZero() {
-		q.Set("end", params.End.Format(ISO8601))
+		q.Set("end", params.End.Format(iSO8601))
 	}
 
 	if len(params.LocationId) > 0 {
