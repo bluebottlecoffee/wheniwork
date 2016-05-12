@@ -30,6 +30,7 @@ func (c *Client) url(path string) *url.URL {
 	return u
 }
 
+// http://dev.wheniwork.com/#listing-shifts
 func (c *Client) ListShifts(params *ListShiftParams) (*ListShiftsResponse, error) {
 	u := c.url("/shifts")
 	q := u.Query()
