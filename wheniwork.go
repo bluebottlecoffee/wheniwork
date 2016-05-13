@@ -22,7 +22,7 @@ func Login(creds *Credentials) (*Client, error) {
 
 	httpClient := &http.Client{}
 
-	loginRequest := LoginRequest{
+	loginRequest := loginRequest{
 		Username: creds.Username,
 		Password: creds.Password,
 	}
@@ -51,7 +51,7 @@ func Login(creds *Credentials) (*Client, error) {
 	defer resp.Body.Close()
 	contents, err := ioutil.ReadAll(resp.Body)
 
-	loginResponse := &LoginResponse{}
+	loginResponse := &loginResponse{}
 	err = json.Unmarshal(contents, &loginResponse)
 
 	if err != nil {

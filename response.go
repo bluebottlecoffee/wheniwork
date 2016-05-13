@@ -4,11 +4,11 @@ import (
 	"time"
 )
 
-type LoginResponse struct {
-	Login *LoginResponseLogin `json:"login"`
+type loginResponse struct {
+	Login *loginResponseLogin `json:"login"`
 }
 
-type LoginResponseLogin struct {
+type loginResponseLogin struct {
 	Token string `json:"token"`
 }
 
