@@ -13,8 +13,8 @@ type loginResponseLogin struct {
 }
 
 type ListShiftsResponse struct {
-	Start  *rFC1123ZTime `json:"start"`
-	End    *rFC1123ZTime `json:"end"`
+	Start  *RFC1123ZTime `json:"start"`
+	End    *RFC1123ZTime `json:"end"`
 	Shifts []Shift       `json:"shifts"`
 }
 
@@ -25,28 +25,28 @@ type Shift struct {
 	LocationId     int64         `json:"location_id"`
 	PositionId     int64         `json:"position_id"`
 	SiteId         int64         `json:"site_id"`
-	StartTime      *rFC1123ZTime `json:"start_time"`
-	EndTime        *rFC1123ZTime `json:"end_time"`
+	StartTime      *RFC1123ZTime `json:"start_time"`
+	EndTime        *RFC1123ZTime `json:"end_time"`
 	BreakTime      float64       `json:"break_time"`
 	Color          string        `json:"color"`
 	Notes          string        `json:"notes"`
 	Instances      int64         `json:"instances"`
 	Published      bool          `json:"published"`
-	PublishedDate  *rFC1123ZTime `json:"published_date"`
-	NotifiedAt     *rFC1123ZTime `json:"notified_at"`
-	CreatedAt      *rFC1123ZTime `json:"created_at"`
-	UpdatedAt      *rFC1123ZTime `json:"updated_at"`
+	PublishedDate  *RFC1123ZTime `json:"published_date"`
+	NotifiedAt     *RFC1123ZTime `json:"notified_at"`
+	CreatedAt      *RFC1123ZTime `json:"created_at"`
+	UpdatedAt      *RFC1123ZTime `json:"updated_at"`
 	Acknowledged   int64         `json:"acknowledged"`
-	AcknowledgedAt *rFC1123ZTime `json:"acknowledged_at"`
+	AcknowledgedAt *RFC1123ZTime `json:"acknowledged_at"`
 	CreatorId      int64         `json:"creator_id"`
 	IsOpen         bool          `json:"is_open"`
 }
 
-type rFC1123ZTime struct {
+type RFC1123ZTime struct {
 	Time time.Time
 }
 
-func (ct *rFC1123ZTime) UnmarshalJSON(b []byte) (err error) {
+func (ct *RFC1123ZTime) UnmarshalJSON(b []byte) (err error) {
 	if b[0] == '"' && b[len(b)-1] == '"' {
 		b = b[1 : len(b)-1]
 	}
@@ -61,6 +61,6 @@ func (ct *rFC1123ZTime) UnmarshalJSON(b []byte) (err error) {
 	return
 }
 
-func (ct *rFC1123ZTime) MarshalJSON() ([]byte, error) {
+func (ct *RFC1123ZTime) MarshalJSON() ([]byte, error) {
 	return []byte(ct.Time.Format(time.RFC1123Z)), nil
 }
