@@ -30,6 +30,7 @@ func (c *Client) url(path string) *url.URL {
 	return u
 }
 
+// Listing Shifts
 // http://dev.wheniwork.com/#listing-shifts
 func (c *Client) ListShifts(params *ListShiftParams) (*ListShiftsResponse, error) {
 	u := c.url("/shifts")
@@ -52,6 +53,15 @@ func (c *Client) ListShifts(params *ListShiftParams) (*ListShiftsResponse, error
 	listShiftsResponse := ListShiftsResponse{}
 	err := c.request(u, &listShiftsResponse)
 	return &listShiftsResponse, err
+}
+
+// Get Existing Shift
+// http://dev.wheniwork.com/#get-existing-shift
+func (c *Client) GetShift(id int64) (*GetShiftResponse, error) {
+	u := c.url("/shift/" + string(id))
+	getShiftResponse := GetShiftResponse{}
+	err := c.request(u, &getShiftResponse)
+	return &getShiftResponse, err
 }
 
 func (c *Client) request(url *url.URL, responseHolder interface{}) error {

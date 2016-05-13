@@ -20,7 +20,7 @@ type ListShiftsResponse struct {
 
 type Shift struct {
 	Id             int64         `json:"id"`
-	AccountId      int64         `json:"id"`
+	AccountId      int64         `json:"account_id"`
 	UserId         int64         `json:"user_id"`
 	LocationId     int64         `json:"location_id"`
 	PositionId     int64         `json:"position_id"`
@@ -40,6 +40,10 @@ type Shift struct {
 	AcknowledgedAt *RFC1123ZTime `json:"acknowledged_at"`
 	CreatorId      int64         `json:"creator_id"`
 	IsOpen         bool          `json:"is_open"`
+}
+
+type GetShiftResponse struct {
+	Shift *Shift `json:"shift"`
 }
 
 type RFC1123ZTime struct {

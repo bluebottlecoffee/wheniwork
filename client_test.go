@@ -97,3 +97,28 @@ func TestListShiftsWithMultipleLocationId(t *testing.T) {
 		t.Error("Request was made to:", recorder.RequestedPath)
 	}
 }
+
+func TestGetShift(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		bytes, err := ioutil.ReadFile("testdata/shift.json")
+
+		if err != nil {
+			t.Error(err)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(bytes)
+	}))
+	defer ts.Close()
+
+	client := Client{Token: "faketoken", HttpClient: &http.Client{}, baseURL: ts.URL}
+	resp, err := client.GetShift(1337)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	if resp.Shift.Id != 1337 {
+		t.Error("Shift 1337 not returned.  Got", resp.Shift.Id)
+	}
+}
