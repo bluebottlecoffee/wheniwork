@@ -13,7 +13,9 @@ type LoginResponseLogin struct {
 }
 
 type ListShiftsResponse struct {
-	Shifts []Shift `json:"shifts"`
+	Start  *rFC1123ZTime `json:"start"`
+	End    *rFC1123ZTime `json:"end"`
+	Shifts []Shift       `json:"shifts"`
 }
 
 type Shift struct {
